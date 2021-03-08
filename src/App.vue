@@ -1,28 +1,44 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+  <v-app>
+    <v-container>
+      <v-row>
+        <v-col>
+          <annual-income
+            :annualIncome="usersAnnualIncome"
+            @handleIncome="updateIncome"
+          />
+        </v-col>
+        <v-col>
+          <monthly-net-card :monthlyNet="monthlyNet" />
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+  import AnnualIncome from "./components/AnnualIncome.vue";
+  import MonthlyNetCard from "./components/MonthlyNetCard.vue";
+  export default {
+    name: "App",
 
-export default {
-  name: "App",
-  components: {
-    HelloWorld
-  }
-};
+    components: { AnnualIncome, MonthlyNetCard },
+
+    data() {
+      return {
+        usersAnnualIncome: 0,
+      };
+    },
+    methods: {
+      updateIncome(newIncome) {
+        this.usersAnnualIncome = newIncome;
+      },
+    },
+    computed: {
+      monthlyNet() {
+        const rounded = (this.usersAnnualIncome / 12).toFixed(2);
+        return rounded;
+      },
+    },
+  };
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
