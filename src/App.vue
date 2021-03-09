@@ -23,6 +23,9 @@
             @deleteExpense="deleteExpense"
           />
         </v-col>
+        <v-col>
+          <expense-chart :expenses="expenses"></expense-chart>
+        </v-col>
       </v-row>
     </v-container>
   </v-app>
@@ -31,6 +34,7 @@
 <script>
   import AnnualIncome from "./components/AnnualIncome";
   import AnnualNetCard from "./components/AnnualNetCard";
+  import ExpenseChart from "./components/ExpenseChart";
   import MonthlyExpenses from "./components/MonthlyExpenses";
   import MonthlyNetCard from "./components/MonthlyNetCard";
   export default {
@@ -41,6 +45,7 @@
       MonthlyNetCard,
       AnnualNetCard,
       MonthlyExpenses,
+      ExpenseChart,
     },
 
     data() {

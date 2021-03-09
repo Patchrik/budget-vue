@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card height="100%">
     <v-container>
       <v-spacer></v-spacer>
       <v-simple-table :height="250">
@@ -24,7 +24,7 @@
       </v-simple-table>
       <v-divider></v-divider>
       <h3 class="my-2">Add Expense</h3>
-      <v-form @submit.prevent="handleSubmit">
+      <v-form @submit.prevent="handleSubmit" ref="expenseForm">
         <v-row>
           <v-col :sm="5">
             <v-text-field
@@ -33,6 +33,7 @@
               type="text"
               solo
               v-model="newExpense.name"
+              :rules="validators.expenseName"
             >
             </v-text-field>
           </v-col>
@@ -44,6 +45,7 @@
               solo
               prepend-inner-icon="mdi-currency-usd"
               v-model="newExpense.amount"
+              :rules="validators.expenseCost"
             >
             </v-text-field>
           </v-col>
@@ -62,19 +64,37 @@
   export default {
     data() {
       return {
-        newExpense: { name: "", amount: null }
+        newExpense: { name: "", amount: null },
+        validators: {
+          expenseName: [
+            (val) => !!val || "Expense Name is required",
+            (val) =>
+              val.length < 25 || "Expense Name must be less 25 characters",
+          ],
+          expenseCost: [
+            (val) => val !== null || "Expense Cost must be entered",
+            (val) => val > 0 || "Expense Cost must be greater than 0",
+            (val) =>
+              val < 1000000000 || "Expense Cost must less than 1 Billion",
+          ],
+        },
       };
     },
     props: { expenses: Array },
     methods: {
       handleSubmit() {
+        const isValid = this.$refs.expenseForm.validate();
+        if (!isValid) {
+          return;
+        }
         this.$emit("submitNewExpense", this.newExpense);
         this.newExpense = { name: "", amount: null };
+        this.$refs.expenseForm.resetValidation();
       },
       handleDelete(expense) {
         this.$emit("deleteExpense", expense);
-      }
-    }
+      },
+    },
   };
 </script>
 
