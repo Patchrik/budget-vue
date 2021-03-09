@@ -29,10 +29,10 @@
 </template>
 
 <script>
-  import AnnualIncome from "./components/AnnualIncome.vue";
-  import AnnualNetCard from "./components/AnnualNetCard.vue";
-  import MonthlyExpenses from "./components/MonthlyExpenses.vue";
-  import MonthlyNetCard from "./components/MonthlyNetCard.vue";
+  import AnnualIncome from "./components/AnnualIncome";
+  import AnnualNetCard from "./components/AnnualNetCard";
+  import MonthlyExpenses from "./components/MonthlyExpenses";
+  import MonthlyNetCard from "./components/MonthlyNetCard";
   export default {
     name: "App",
 
@@ -46,25 +46,31 @@
     data() {
       return {
         usersAnnualIncome: 0,
-        expenses: [
-          { name: "Dog Food", amount: 30 },
-          { name: "Coffee", amount: 6 },
-          { name: "Gas", amount: 23 },
-        ],
+        expenses: [],
       };
+    },
+    created() {
+      const existingExpenses = JSON.parse(localStorage.getItem("expenses"));
+      this.expenses = existingExpenses || [];
+      const existingIncome = JSON.parse(localStorage.getItem("income"));
+      this.usersAnnualIncome = +existingIncome || 0;
     },
     methods: {
       updateIncome(newIncome) {
         this.usersAnnualIncome = newIncome;
+
+        localStorage.setItem("income", JSON.stringify(this.usersAnnualIncome));
       },
       addExpense(newExpense) {
         this.expenses.push({
           name: newExpense.name,
           amount: +newExpense.amount,
         });
+        localStorage.setItem("expenses", JSON.stringify(this.expenses));
       },
       deleteExpense(expense) {
         this.expenses = this.expenses.filter((exp) => exp !== expense);
+        localStorage.setItem("expenses", JSON.stringify(this.expenses));
       },
     },
     computed: {

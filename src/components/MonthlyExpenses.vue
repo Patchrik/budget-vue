@@ -62,7 +62,7 @@
   export default {
     data() {
       return {
-        newExpense: { name: "", amount: null },
+        newExpense: { name: "", amount: null }
       };
     },
     props: { expenses: Array },
@@ -73,8 +73,8 @@
       },
       handleDelete(expense) {
         this.$emit("deleteExpense", expense);
-      },
-    },
+      }
+    }
   };
 </script>
 

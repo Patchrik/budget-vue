@@ -20,8 +20,8 @@
           return "red--text";
         }
         return "green--text";
-      },
-    },
+      }
+    }
   };
 </script>
 

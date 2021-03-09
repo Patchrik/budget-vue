@@ -4,18 +4,16 @@
       <v-row>
         <v-col>
           <label>Annual Income</label>
-          <v-text-field
-            @blur="handleIncome"
-            @keyup.enter="handleIncome"
-            class="col-8"
-            label="Income"
-            type="number"
-            solo
-            shaped
-            prepend-inner-icon="mdi-currency-usd"
-            v-model="incomeState"
-          >
-          </v-text-field>
+          <v-form @submit.prevent="handleIncome">
+            <v-text-field
+              @blur="handleIncome"
+              v-model="incomeState"
+              type="number"
+              solo
+              shaped
+              prepend-inner-icon="mdi-currency-usd"
+            />
+          </v-form>
         </v-col>
       </v-row>
     </v-container>
@@ -24,17 +22,17 @@
 
 <script>
   export default {
+    props: ["annualIncome"],
     data() {
       return {
-        incomeState: this.annualIncome,
+        incomeState: +this.annualIncome
       };
     },
-    props: ["annualIncome"],
     methods: {
       handleIncome() {
         this.$emit("handleIncome", this.incomeState);
-      },
-    },
+      }
+    }
   };
 </script>
 
