@@ -4,7 +4,7 @@
       <v-row>
         <v-col>
           <label>Annual Net</label>
-          <h1>${{ annualNet }}</h1>
+          <h1 :class="checkNegative">${{ annualNet }}</h1>
         </v-col>
       </v-row>
     </v-container>
@@ -14,6 +14,14 @@
 <script>
   export default {
     props: ["annualNet"],
+    computed: {
+      checkNegative() {
+        if (this.annualNet < 0) {
+          return "red--text";
+        }
+        return "green--text";
+      },
+    },
   };
 </script>
 

@@ -4,7 +4,7 @@
       <v-row>
         <v-col>
           <label>Monthly Net</label>
-          <h1>${{ monthlyNet }}</h1>
+          <h1 :class="checkNegative">${{ monthlyNet }}</h1>
         </v-col>
       </v-row>
     </v-container>
@@ -14,6 +14,14 @@
 <script>
   export default {
     props: ["monthlyNet"],
+    computed: {
+      checkNegative() {
+        if (this.monthlyNet < 0) {
+          return "red--text";
+        }
+        return "green--text";
+      },
+    },
   };
 </script>
 
